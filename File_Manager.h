@@ -8,7 +8,7 @@
 #ifndef FILE_MANAGER_H
 #define FILE_MANAGER_H
 
-// costant
+
 #define NCAR 100
 #define NUM_DATA 285
 
@@ -16,7 +16,7 @@
 void load_data(FILE *fp, float Matrix_loaded[NUM_DATA][8]);
 // This fucntion modify the ins basal column (colomn1); then it produces a matrix with only four column:
 // glucose - ins basal - ins - cho
-// The Matrix of interest is Initial_Conditions
+// The Matrix of interest is Initial_Conditions because contain the column with correct values of ins basal.
 void column_of_interest(float Matrix_loaded[NUM_DATA][8], float Initial_Conditions[NUM_DATA][4]);
 
 #endif /*FILE_MANAGER_H*/
