@@ -32,29 +32,17 @@ int main() {
 
     // Data_Train
     for (i = 0; i < NUM_DATA; i++) {
-        for (j = 0; j < 2; j++) {
-            if (j == 0)
-                Data_Train[i][j] = i;
-            else
-                Data_Train[i][j] = Initial_Conditions[i][0];
-        }
+                Data_Train[i][0] = i;
+                Data_Train[i][1] = Initial_Conditions[i][0];
     }
-    //Print - DATA_TRAIN
-   /* for (i = 0; i < NUM_DATA; i++) {
-        for (j = 0; j < 2; j++)
-            printf ("%f", Data_Train[i][j]);
-            printf("\n");
-    }*/
 
     // Data_Test
+    int jj = 0;
     for (i = last_training; i < NUM_DATA; i++) {
-        for (j = 0; j < 2; j++) {
-            if (j == 0)
-                Data_Test[i][j] = i;
-            else
-                Data_Test[i][j] = Initial_Conditions[i][0];
+            Data_Test[jj][0] = i;
+            Data_Test[jj][1] = Data_Train[i][1];
+            jj++;
         }
-    }
 
     // IC_Train[NUM_DATA][2] contain value of column0 - column1 - column3 - column4.
     // IC_Test[NUM_DATA-Delta_t_prevision][2] contain value of column0 - column1 - column3 - column4.
@@ -153,41 +141,38 @@ int main() {
 
     int I_lentol = NUM_DATA;
 
-    printf ("data test 1: %f", Data_Test[280][0]);
-
     // ordinate running from -1 to +1
     // FVr_x
     int FVr_x[NUM_DATA][1];
     for (i = 0; i < NUM_DATA; i++) {
-        FVr_x[i][0] = 0;//Data_Train[i][0];
+        FVr_x[i][0] = Data_Train[i][0];
     }
-
-    printf ("\ndata test 2: %f", Data_Test[280][0]);
 
     // upper limit
     // max value of FVr_x
     int FVr_x_lim_up;
-    int max = 0;
+    int max_x = 0;
     for (i = 0; i < NUM_DATA; i++) {
-        if (FVr_x[i][0] > max)
-            max = FVr_x[i][0];
+        if (FVr_x[i][0] > max_x)
+            max_x = FVr_x[i][0];
         }
-    FVr_x_lim_up = max;
+    FVr_x_lim_up = max_x;
+
 
     // lower limit
     // min value of FVr_x
     int FVr_x_lim_lo;
-    int min = NUM_DATA;
+    int min_x = NUM_DATA;
     for (i = 0; i < NUM_DATA; i++) {
-            if (FVr_x[i][0] < min)
-                min = FVr_x[i][0];
+            if (FVr_x[i][0] < min_x)
+                min_x = FVr_x[i][0];
     }
-    FVr_x_lim_lo = min;
+    FVr_x_lim_lo = min_x;
 
     // ordinate running from -1 to +1
     float FVr_y[NUM_DATA][1];
     for (i = 0; i < NUM_DATA; i++) {
-            FVr_y[i][0] = Initial_Conditions[i][0];
+            FVr_y[i][0] = Data_Train[i][0];
     }
 
     // upper limit
@@ -212,16 +197,60 @@ int main() {
     }
     FVr_y_lim_lo = min_y;
 
-
     // ordinate running from -1 to +1
     int FVr_xte[Delta_t_prevision][1];
-    for (i = last_training; i < NUM_DATA; i++) {
+    for (i = 0; i < Delta_t_prevision; i++) {
         FVr_xte[i][0] = Data_Test[i][0];
     }
 
-    /*for (i = last_training; i < NUM_DATA; i++) {
-        printf ("%d\n", FVr_xte[i][0]);
-    }*/
+    // upper limit
+    // max value of FVr_xte
+    int FVr_xte_lim_up;
+    int max_xte = 0;
+    for (i = 0; i < Delta_t_prevision; i++) {
+        if (FVr_xte[i][0] > max_x)
+            max_x = FVr_xte[i][0];
+    }
+    FVr_xte_lim_up = max_x;
+
+    // lower limit
+    // min value of FVr_xte
+    int FVr_xte_lim_lo;
+    int min_xte = NUM_DATA;
+    for (i = 0; i < Delta_t_prevision; i++) {
+        if (FVr_xte[i][0] < min_xte)
+            min_xte = FVr_xte[i][0];
+    }
+    FVr_xte_lim_lo = min_xte;
+
+    // ordinate running from -1 to +1
+    float FVr_yte[Delta_t_prevision][1];
+    for (i = 0; i < Delta_t_prevision; i++) {
+        FVr_yte[i][0] = Data_Test[i][1];
+    }
+
+    // upper limit
+    // max value of FVr_yte
+    float FVr_yte_lim_up;
+    float max_yte = 0.0;
+    for (i = 0; i < Delta_t_prevision; i++) {
+        for (j = 0; j < 1; j++) {
+            if (FVr_yte[i][j]  > max_yte)
+                max_yte = FVr_yte[i][j] ;
+        }
+    }
+    FVr_yte_lim_up = max_yte;
+
+    // lower limit
+    // min value of FVr_y
+    float FVr_yte_lim_lo;
+    float min_yte = NUM_DATA;
+    for (i = 0; i < Delta_t_prevision; i++) {
+        if (FVr_yte[i][0] < min_yte)
+            min_yte = FVr_yte[i][0];
+    }
+    FVr_yte_lim_lo = min_yte;
+
 
 
 
