@@ -138,3 +138,51 @@ void column_of_interest(float Matrix_loaded[NUM_DATA][8], float Initial_Conditio
         printf ( "\n");
     }*/
 }
+
+
+void matrices_of_interest(float Initial_Conditions[NUM_DATA][4], float Data_Train[NUM_DATA][2], float Data_Test[Delta_t_prevision][2], float IC_train[NUM_DATA][4], float IC_test[Delta_t_prevision][4]){
+    int i = 0;
+    int j = 0;
+    int ii = 0;
+    int jj = 0;
+    int last_training = NUM_DATA - Delta_t_prevision;
+
+
+    // Data_Train[NUM_DATA][2] contain all value of column0
+    // Data_Test[Delta_t_prevision][2] contain value of column0 between NUM_DATA-Delta_t_prevision to NUM_DATA
+
+    // Data_Train
+    for (i = 0; i < NUM_DATA; i++) {
+        Data_Train[i][0] = i;
+        Data_Train[i][1] = Initial_Conditions[i][0];
+    }
+
+    // Data_Test
+    for (i = last_training; i < NUM_DATA; i++) {
+        Data_Test[jj][0] = i;
+        Data_Test[jj][1] = Data_Train[i][1];
+        jj++;
+    }
+
+
+    // IC_Train[NUM_DATA][2] contain value of column0 - column1 - column3 - column4.
+    // IC_Test[NUM_DATA-Delta_t_prevision][2] contain value of column0 - column1 - column3 - column4.
+    // IC_Train == Initial_conditions.
+    // IC_Test == The last Delta_t_prevision row of Initial_conditions.
+
+    // IC_train
+    for (i = 0; i < NUM_DATA; i++) {
+        for (j = 0; j < 4; j++) {
+            IC_train[i][j] = Initial_Conditions[i][j];
+        }
+    }
+
+    //IC_test
+    for (i = last_training; i < NUM_DATA; i++) {
+        for (j = 0; j < 4; j++) {
+            IC_test[ii][j] = IC_train[i][j];
+        }
+        ii++;
+    }
+}
+
