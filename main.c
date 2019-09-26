@@ -4,13 +4,12 @@
 
 #include "File_Manager.h"
 #include "Info.h"
-
-// int  Delta_t_prevision = 12;
-
+#include "Hovorka_Model.h"
 
 int main() {
     int i = 0;
     int j = 0;
+
     //char filename[NCAR];
     //printf("Inserisci nome file dati: ");
     //scanf("%s", filename);
@@ -24,10 +23,15 @@ int main() {
     float IC_train[NUM_DATA][4];
     float IC_test[Delta_t_prevision][4];
 
+    // Parameters vector
+    float FVr_temp[I_D];
+    int fin;
+
     load_data(fp, Matrix_loaded);
     column_of_interest(Matrix_loaded, Initial_Conditions);
     matrices_of_interest(Initial_Conditions, Data_Train, Data_Test, IC_train, IC_test);
     structure_data(Data_Train, Data_Test);
+    hovorka_IGDynamics_prev(FVr_temp, Initial_Conditions, fin);
 
     return 0;
 }

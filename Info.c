@@ -1,8 +1,6 @@
 //
-// Created by franc on 25/09/2019.
+// Created by Francesco_D'Ambrosio on 25/09/2019.
 //
-
-// #include "Constant.h"
 
 #include "Info.h"
 #include "File_Manager.h"

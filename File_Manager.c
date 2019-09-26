@@ -48,13 +48,6 @@ void load_data(FILE *fp, float Matrix_loaded[NUM_DATA][8]) {
         Matrix_loaded[i][6] = column6[i];
         Matrix_loaded[i][7] = column7[i];
     }
-
-    // Print - Matrix_loaded
-   /* for (i = 0; i < NUM_DATA; i++) {
-        for (j = 0; j < 8; j++)
-            printf("%f", Matrix_loaded[i][j]);
-        printf("\n");
-    }*/
 }
 
 
@@ -62,12 +55,12 @@ void column_of_interest(float Matrix_loaded[NUM_DATA][8], float Initial_Conditio
     int i = 0;
     int j = 0;
 
-    // Changing the values of the ins basal column
     int *idx;
     float diff[NUM_DATA];
     float value;
     int count = 0;
 
+    // Creation diff
     for (i = 0; i < NUM_DATA - 1; i++) {
         diff[i] = Matrix_loaded[i + 1][1] - Matrix_loaded[i][1];
         if (diff[i] != 0) {
@@ -88,11 +81,9 @@ void column_of_interest(float Matrix_loaded[NUM_DATA][8], float Initial_Conditio
     }
 
     *(idx + j) = numel_ins_basal;
-   /* for (i=0; i<count+1; i++)
-        printf ("\n%d", *(idx+i));*/
     value = Matrix_loaded[0][1]  / *idx;
-    //printf("\nvalue: %0.4f", value);
 
+    // Changing the values of the ins basal column
     int ii = 0;
     int jj = 0;
     while (ii < numel_ins_basal) {
@@ -110,7 +101,7 @@ void column_of_interest(float Matrix_loaded[NUM_DATA][8], float Initial_Conditio
     }
 
 
-    // Only 4 column of interest.
+    // Only 4 columns of interest.
     int column_index = 0;
     int row_index = 0;
 
