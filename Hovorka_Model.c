@@ -16,7 +16,6 @@ void meal_disturbance2(float Initial_Conditions[NUM_DATA][4], float t_max_G, flo
     int *idx_cho_intake;
     int t[n][1];
     float cho_intake[NUM_DATA][1];
-    float meal_abs[n][1];
 
     // cho_intake is the 4 column of Initial_Conditions
     for (i = 0; i < NUM_DATA; i++) {
@@ -41,53 +40,62 @@ void meal_disturbance2(float Initial_Conditions[NUM_DATA][4], float t_max_G, flo
     }
     /*for (i=0; i<count; i++)
        printf ("\n%d", *(idx_cho_intake+i));*/
-
     int m = count;
     float c[n][m];
 
+    // t is a column that contains value from 0 to n
     for (i = 0; i < n; i++) {
         t[i][0] = i + 1;
     }
 
-    //printf("%d ", *(idx_cho_intake+0));
-    //printf("%f ",t_max_G*t_max_G);
 
-    int D_G[m];
+    float D_G[m];
     int initial[m];
+    float meal_abs[NUM_DATA][m];
 
+    // meal_abs initialization
+    for (i=0; i<NUM_DATA; i++){
+        for (j=0; j<m; j++){
+            meal_abs[i][j] = 0;
+        }
+    }
+
+    // meal_abs
     for (i = 0; i < n; i++) {
         for (j = 0; j < m; j++) {
             D_G[j] = cho_intake[*(idx_cho_intake + j) - 1][0];
-            c[i][j] = (D_G[j] * A_G * exp(-t[i][j] / t_max_G)) / (t_max_G * t_max_G);
+            c[i][j] = (D_G[j] * A_G * exp(-t[i][0] / t_max_G)) / (t_max_G * t_max_G);
             initial[j] = *(idx_cho_intake + j);
-            for (z = 0; z < n; z++) {
-                if ((z + initial[j]) <= (sizeof(cho_intake) / sizeof(cho_intake[0]))) {
-                    meal_abs[z + initial[j]][0] = meal_abs[z + initial[j]][0] + c[z][0];
-                }
-
-
-            }
-
 
         }
     }
-    int ii=0;
-    while(ii<300){
-        for (j = 0; j < m; j++)
-            printf("%f\n", meal_abs[i + initial[j]][0]);
-        ii++;
+
+    for (z = 0; z < n; z++) {
+    for (j = 0; j < m; j++) {
+
+                if ((z + initial[j]) <= NUM_DATA)
+                    meal_abs[z + initial[j]][j] = meal_abs[z + initial[j]][j] + c[z][j];
+        }
     }
 
-   // printf("%f\n", meal_abs[284][0]);
+    for (i = 0; i < NUM_DATA; i++){
+        for (j = 0; j < m; j++)
+            printf ("%0.4f     ", meal_abs[i][j]);
+        printf("\n");
+    }
+
+
+
+
+
+
+
+
+
 
 
 
 }
-
-
-
-
-
 
 
 void hovorka_IGDynamics_prev(float FVr_temp[I_D], float Initial_Conditions[NUM_DATA][4], int fin){
