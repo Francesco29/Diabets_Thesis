@@ -23,15 +23,19 @@ int main() {
     float IC_train[NUM_DATA][4];
     float IC_test[Delta_t_prevision][4];
 
-    // Parameters vector
-    float FVr_temp[I_D];
+
+    float FVr_temp[I_D]; // Parameters vector
     int fin;
+
 
     load_data(fp, Matrix_loaded);
     column_of_interest(Matrix_loaded, Initial_Conditions);
     matrices_of_interest(Initial_Conditions, Data_Train, Data_Test, IC_train, IC_test);
     structure_data(Data_Train, Data_Test);
     hovorka_IGDynamics_prev(FVr_temp, Initial_Conditions, fin);
+
+
+
 
     return 0;
 }

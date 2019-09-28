@@ -110,11 +110,11 @@ void column_of_interest(float Matrix_loaded[NUM_DATA][8], float Initial_Conditio
             if (column_index == 0)
                 Initial_Conditions[row_index][0] = Matrix_loaded[row_index][0];
             if (column_index == 1)
-                Initial_Conditions[row_index][1] = Matrix_loaded[row_index][1];
+                Initial_Conditions[row_index][1] = Matrix_loaded[row_index][1]; //basal_insulin
             if (column_index == 3)
-                Initial_Conditions[row_index][2] = Matrix_loaded[row_index][2];
+                Initial_Conditions[row_index][2] = Matrix_loaded[row_index][3]; //insulin_dosage
             if (column_index == 4)
-                Initial_Conditions[row_index][3] = Matrix_loaded[row_index][4];
+                Initial_Conditions[row_index][3] = Matrix_loaded[row_index][4]; //cho_intake
         }
     }
 
@@ -124,7 +124,7 @@ void column_of_interest(float Matrix_loaded[NUM_DATA][8], float Initial_Conditio
     for (row=0; row<NUM_DATA; row++){
 
         for (column=0; column<4; column++)
-            printf ("%0.4f",Initial_Conditions[row][column]);
+            printf ("%0.4f  ",Initial_Conditions[row][column]);
 
         printf ( "\n");
     }*/
